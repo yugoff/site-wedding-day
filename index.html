@@ -880,7 +880,7 @@
            ============================================ */
         
         .final-section {
-            background: linear-gradient(135deg, #f0f0f0, #d9d9d9);
+            background: var(--color-white);
             text-align: center;
             padding: 120px 20px;
             position: relative;
@@ -889,7 +889,7 @@
         
         .final-section::before,
         .final-section::after {
-            content: '💕';
+            content: '❤️';
             position: absolute;
             font-size: 4rem;
             opacity: 0.1;
@@ -1145,7 +1145,7 @@
                         <div class="program-title">Сбор гостей</div>
                     </div>
                     <div class="program-description">
-                        Берите с собой самое лучшее настроение — вас будет ждать тёплый welcome
+                        Настраиваемся на праздник и заряжаемся отличным настроением
                     </div>
                 </li>
                 <li class="program-item">
@@ -1154,16 +1154,16 @@
                         <div class="program-title">Церемония</div>
                     </div>
                     <div class="program-description">
-                        Носовые платочки готовить не обязательно — мы хотим только радоваться и улыбаться
+                        Официальная часть: обмениваемся кольцами и радостью
                     </div>
                 </li>
                 <li class="program-item">
                     <div class="program-header">
-                        <div class="program-time">19:00</div>
-                        <div class="program-title">Банкет</div>
+                        <div class="program-time">16:30</div>
+                        <div class="program-title">Семейный ужин</div>
                     </div>
                     <div class="program-description">
-                        Будем вкусно кушать, танцевать и петь
+                        Время для теплых поздравлений и праздничного ужина
                     </div>
                 </li>
                 <!-- <li class="program-item">
@@ -1233,10 +1233,10 @@
             <h2>Подарки и цветы</h2>
             <div class="gifts-content">
                 <p>
-                    Мы очень ценим вашу заботу и будем рады любому подарку — не важно, в какой конверт он будет упакован 🙂
+                    Главное для нас — разделить этот день с вами. Мы не ждем подарков, но если вы захотите сделать нам приятное, конверт с любым вложением будет лучшим решением
                 </p>
                 <p>
-                    Просим не мучить цветы долгой дорогой и заменить их бутылочкой любого приятного напитка, которым мы сможем наслаждаться вместе с вами долгими осенними вечерами.
+                    Вместо цветов мы будем рады получить от вас маленький знак внимания: любимое вино, книгу или любой другой сюрприз, который напомнит нам о вас
                 </p>
             </div>
         </div>
@@ -1418,22 +1418,46 @@
         // ============================================
         
         const rsvpForm = document.getElementById('rsvpForm');
-        
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyS4YeNnpnxH1F0KqN5ru3FLChP-T7zsZUzpLhqLr1t9S5pNCcX5aR4Kx7ugJ1DIme1pQ/exec';
+
         rsvpForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
+            // Визуальный отклик для гостя
+            const submitBtn = rsvpForm.querySelector('.form-submit');
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.innerText = 'Отправляем...';
+            submitBtn.disabled = true;
+
             const formData = new FormData(rsvpForm);
-            const name = formData.get('name');
-            const attendance = formData.get('attendance');
-            const drinks = formData.getAll('drinks');
             
-            console.log('Данные формы:', {
-                name,
-                attendance,
-                drinks
+            // Собираем напитки в одну строку, чтобы они корректно легли в ячейку
+            const selectedDrinks = formData.getAll('drinks').join(', ');
+            
+            // Формируем данные для отправки
+            const urlEncodedData = new URLSearchParams();
+            urlEncodedData.append('name', formData.get('name'));
+            urlEncodedData.append('attendance', formData.get('attendance'));
+            urlEncodedData.append('drinks', selectedDrinks);
+
+            fetch(scriptURL, { 
+                method: 'POST', 
+                mode: 'no-cors', 
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: urlEncodedData
+            })
+            .then(() => {
+                alert('Спасибо! Ваш ответ принят. Мы будем рады видеть вас на нашей свадьбе! 💕');
+                rsvpForm.reset();
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+            })
+            .catch(error => {
+                console.error('Ошибка!', error.message);
+                alert('Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз или напишите нам лично.');
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalBtnText;
             });
-            
-            alert('Спасибо! Ваш ответ принят. Мы будем рады видеть вас на нашей свадьбе! 💕');
         });
         
         // ============================================
