@@ -226,7 +226,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('image.jpg');
+            background-image: url('../image.jpg');
             background-size: cover;
             background-position: center;
             filter: grayscale(10%);
@@ -1282,37 +1282,8 @@
                 </div>
                 
                 <div class="form-group">
-                    <label>Предпочтения по напиткам</label>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="vodka" name="drinks" value="vodka">
-                            <label for="vodka">Водка</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="cognac" name="drinks" value="cognac">
-                            <label for="cognac">Коньяк</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="whiskey" name="drinks" value="whiskey">
-                            <label for="whiskey">Виски</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="champagne" name="drinks" value="champagne">
-                            <label for="champagne">Шампанское</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="white-wine" name="drinks" value="white-wine">
-                            <label for="white-wine">Белое вино</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="red-wine" name="drinks" value="red-wine">
-                            <label for="red-wine">Красное вино</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="non-alcoholic" name="drinks" value="non-alcoholic">
-                            <label for="non-alcoholic">Безалкогольные напитки</label>
-                        </div>
-                    </div>
+                    <label for="drinks">Предпочтения по напиткам</label>
+                    <input type="text" id="drinks" name="drinks" placeholder="Вино, виски, сок или ваши пожелания">
                 </div>
                 
                 <button type="submit" class="btn form-submit">Отправить ответ</button>
